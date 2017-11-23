@@ -14,6 +14,7 @@
         else {?>
 			<ul class="nav">
                   <li><a href="<?php echo base_url();?>materia"><i class="glyphicon glyphicon-list"></i> Materias</a></li>
+                  <li><a href="<?php echo base_url();?>propuesta"><i class="glyphicon glyphicon-calendar"></i> Propuestas</a></li>
             </ul>
         <?php }?>
          </div>

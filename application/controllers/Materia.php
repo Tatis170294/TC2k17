@@ -24,6 +24,33 @@ class Materia extends CI_Controller{
 		}
   }
 
+  public function insert_prop() {
+    if($this->session->userdata('logged_in')) {
+    $session_data = $this->session->userdata('logged_in');
+      //si se envía la propuesta
+      if($this->input->post()) {
+          //guardamos los ids de las materias propuestas en un arreglo para después insertar esos ids en la bd
+          $mats_prop = array();
+          $mats_prop['materias'] = $this->input->post('materias_propuestas');
+          //fecha hoy
+          $date = date("Y-m-d");
+          //insertamos la propuesta primeramente en la bd y recuperamos el id de ésta
+          $this->load->model('propuestas');
+          $lastId = $this->propuestas->insert($date,$session_data['Matricula']);
+          //una vez que se haya insertado la propuesta insertamos las materias que fueron propuestas
+          $this->load->model('propuestas_materias');
+          $this->propuestas_materias->insert($lastId, $mats_prop);
+          //una vez insertado todo redirigimos al usuario al index de las propuestas
+          redirect('propuesta', 'refresh');
+      }
+      else {
+        redirect('materia', 'refresh');
+      }
+    }
+    else {
+      redirect('login', 'refresh');
+    }
+  }
   public function insert($nrc=null) {
     if($this->session->userdata('logged_in')) {
 			$session_data = $this->session->userdata('logged_in');
