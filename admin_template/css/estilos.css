@@ -1,0 +1,20 @@
+h1.titulo {
+  color: white;
+}
+
+p.btn-agregar {
+  text-align: right;
+}
+
+h2.no-records {
+  color: rgb(218, 33, 33);
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+}
+
+textarea {
+  resize: none;
+}
