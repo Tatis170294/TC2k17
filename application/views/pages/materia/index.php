@@ -1,8 +1,12 @@
 <div class="col-md-10">
+  <?php 
+  //si es secretaría académica mostrar este botón
+  if($sesion_usuario['Matricula'] == 111111111) {
+  ?>
   <p class="btn-agregar">
     <a class="btn btn-primary" href="<?php echo base_url();?>materia/insert"><i class="glyphicon glyphicon-plus"></i> Agregar Materia</a>
   </p>
-  <?php
+  <?php }
     if ($materias) {
   ?>
       <div class="content-box-large">
@@ -14,7 +18,8 @@
           <thead>
             <tr>
             <?php
-            if($matricula == 111111111) { ?>
+            //si es secretaría académica mostrar esto
+            if($sesion_usuario['Matricula'] == 111111111) { ?>
               <th class="center">NRC</th>
               <th class="center">Nombre</th>
               <th class="center">Acción</th>
@@ -33,6 +38,7 @@
                 </td>
               </tr>
            <?php endforeach; }
+           //si es cualquier otro usuario mostrar esto
            else {
             ?>
             <th class="center">NRC</th>

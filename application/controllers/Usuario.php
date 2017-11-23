@@ -83,6 +83,7 @@ class Usuario extends CI_Controller{
       $data = array();
       $this->load->model('usuarios');
       $data['usuario'] = $this->usuarios->getById($matricula);
+      $data['sesion_usuario'] = $session_data;
 			$this->load->view('templates/header2',$session_data);
 			$this->load->view('templates/menu',$session_data);
       $this->load->view('pages/usuario/detail',$data);

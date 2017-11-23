@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <footer>
          <div class="container">
             <div class="copy text-center">
-               Copyright 2017 - TC2K17
+               Copyright 2017 - TC2k17
             </div>
          </div>
     </footer>
