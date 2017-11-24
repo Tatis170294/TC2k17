@@ -10,21 +10,20 @@ class Comentarios extends CI_Model {
   public function getAllById($idPropuesta) {
     $this->db->select('Comentario, comentario.fecha as fecha, Matricula, Nombre');  
     $this->db->from('comentario');
-    $this->db->join('propuesta_has_comentario', 'comentario.idComentario = propuesta_has_comentario.Comentario_idComentario');
-    $this->db->join('propuesta', 'propuesta_has_comentario.Propuesta_idPropuesta = propuesta.idPropuesta');
-    $this->db->join('usuario', 'propuesta.Usuario_Matricula = usuario.Matricula');
-    $this->db->where('idPropuesta', $idPropuesta);
+    $this->db->join('usuario', 'comentario.Usuario_Matricula = usuario.Matricula');
+    $this->db->where('comentario.Propuesta_idPropuesta', $idPropuesta);
     $query = $this->db->get();
     return $query->result();
   }
 
-  public function insert($comentario, $fecha) {
+  public function insert($comentario, $fecha, $matricula, $idPropuesta) {
     $data = array(
       'Comentario' => $comentario,
-      'fecha' => $fecha
+      'fecha' => $fecha,
+      'Usuario_Matricula' => $matricula,
+      'Propuesta_idPropuesta' => $idPropuesta
     );
       $this->db->insert('comentario', $data);
-      return $this->db->insert_id();
   }
 
 }

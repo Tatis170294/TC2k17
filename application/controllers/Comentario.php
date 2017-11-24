@@ -26,15 +26,13 @@ class Comentario extends CI_Controller{
     if($this->session->userdata('logged_in')) {
       if($this->input->post()) {
         $session_data = $this->session->userdata('logged_in');
+        $matricula = $session_data['Matricula'];
         //fecha de hoy
         $date = date("Y-m-d");
         $comentario = $this->input->post('comentario');
         $this->load->model('comentarios');
-        //primero se inserta el comentario a la base de datos y recuperamos el último id insertado
-        $lastId = $this->comentarios->insert($comentario, $date);
-        //ahora insertamos a la tabla de propuesta has comentario
-        $this->load->model('propuestas_comentarios');
-        $this->propuestas_comentarios->insert($idPropuesta, $lastId);
+        //insertamos el comentario a la base de datos
+        $this->comentarios->insert($comentario, $date, $matricula, $idPropuesta);
         redirect('propuesta_materia/getById/'.$idPropuesta,'refresh');
       }
       else {
