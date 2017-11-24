@@ -4,12 +4,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <footer>
          <div class="container">
             <div class="copy text-center">
-               Copyright 2017 - TC2K17
+               Copyright 2017 - TC2k17
             </div>
          </div>
     </footer>
 
     <link href="<?php echo base_url();?>admin_template/vendors/datatables/dataTables.bootstrap.css" rel="stylesheet" media="screen">
+
+    <script src="<?php echo base_url();?>admin_template/vendors/datatables/js/jquery.dataTables.min.js"></script>
+
+    <script src="<?php echo base_url();?>admin_template/vendors/datatables/dataTables.bootstrap.js"></script>
 
     <script src="<?php echo base_url();?>admin_template/bootstrap/js/jquery.js"></script>
 
@@ -18,10 +22,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?php echo base_url();?>admin_template/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="<?php echo base_url();?>admin_template/vendors/form-helpers/js/bootstrap-formhelpers.min.js"></script>
-
-    <script src="<?php echo base_url();?>admin_template/vendors/datatables/js/jquery.dataTables.min.js"></script>
-
-    <script src="<?php echo base_url();?>admin_template/vendors/datatables/dataTables.bootstrap.js"></script>
 
     <script src="<?php echo base_url();?>admin_template/vendors/select/bootstrap-select.min.js"></script>
 

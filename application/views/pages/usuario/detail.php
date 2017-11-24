@@ -1,8 +1,13 @@
     <div class="col-md-10">
+    <?php 
+    //si es secretaría académica mostrar estos botones
+    if($sesion_usuario['Matricula'] == 111111111) {
+    ?>
       <p class="btn-agregar">
         <a class="btn btn-primary" href="<?php echo base_url();?>usuario/insert"><i class="glyphicon glyphicon-plus"></i> Agregar Usuario</a>
         <a class="btn btn-primary" href="<?php echo base_url();?>usuario"><i class="glyphicon glyphicon-user"></i> Usuarios</a>
       </p>
+    <?php }?>
       <div class="content-box-large">
         <div class="panel-heading">
           <center><div class="panel-title">Detalle de Usuario</div></center>

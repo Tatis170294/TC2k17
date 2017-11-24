@@ -13,7 +13,7 @@ class Materia extends CI_Controller{
       $data = array();
       $this->load->model('materias');
       $data['materias'] = $this->materias->getAll();
-      $data['matricula'] = $session_data['Matricula'];
+      $data['sesion_usuario'] = $session_data;
 			$this->load->view('templates/header2',$session_data);
 			$this->load->view('templates/menu',$session_data);
       $this->load->view('pages/materia/index',$data);
@@ -24,25 +24,50 @@ class Materia extends CI_Controller{
 		}
   }
 
+  public function insert_prop() {
+    if($this->session->userdata('logged_in')) {
+    $session_data = $this->session->userdata('logged_in');
+      //si se envía la propuesta
+      if($this->input->post()) {
+          //guardamos los ids de las materias propuestas en un arreglo para después insertar esos ids en la bd
+          $mats_prop = array();
+          $mats_prop['materias'] = $this->input->post('materias_propuestas');
+          //fecha hoy
+          $date = date("Y-m-d");
+          //insertamos la propuesta primeramente en la bd y recuperamos el id de ésta
+          $this->load->model('propuestas');
+          $lastId = $this->propuestas->insert($date,$session_data['Matricula']);
+          //una vez que se haya insertado la propuesta insertamos las materias que fueron propuestas
+          $this->load->model('propuestas_materias');
+          $this->propuestas_materias->insert($lastId, $mats_prop);
+          //una vez insertado todo redirigimos al usuario al index de las propuestas
+          redirect('propuesta', 'refresh');
+      }
+      else {
+        redirect('materia', 'refresh');
+      }
+    }
+    else {
+      redirect('login', 'refresh');
+    }
+  }
   public function insert($nrc=null) {
     if($this->session->userdata('logged_in')) {
 			$session_data = $this->session->userdata('logged_in');
       $data = array();
       $this->load->model('materias');
       if($nrc) {
-        $materia = $this->materias->getById($nrc);
-        $data['NRC'] = $materia->NRC;
+        $materia = $this->materias->getUpdateInfoById($nrc);
+        $data['Nrc'] = $materia->NRC;
         $data['Nombre'] = $materia->Nombre;
-
         $this->load->view('templates/header2',$session_data);
         $this->load->view('templates/menu',$session_data);
         $this->load->view('pages/materia/update',$data);
         $this->load->view('templates/footer');
       }
       else {
-        $data['NRC'] = null;
+        $data['Nrc'] = null;
         $data['Nombre'] = null;
-
         $this->load->view('templates/header2',$session_data);
         $this->load->view('templates/menu',$session_data);
         $this->load->view('pages/materia/create',$data);
@@ -72,34 +97,17 @@ class Materia extends CI_Controller{
     }
   }
 
-  public function getById($matricula) {
+  public function update($nrc) {
     if($this->session->userdata('logged_in')) {
 			$session_data = $this->session->userdata('logged_in');
       $data = array();
-      $this->load->model('usuarios');
-      $data['usuario'] = $this->usuarios->getById($matricula);
-			$this->load->view('templates/header2',$session_data);
-			$this->load->view('templates/menu',$session_data);
-      $this->load->view('pages/usuario/detail',$data);
-			$this->load->view('templates/footer');
-		}
-    else {
-			redirect('login', 'refresh');
-		}
-  }
-
-  public function update($matricula) {
-    if($this->session->userdata('logged_in')) {
-			$session_data = $this->session->userdata('logged_in');
-      $data = array();
-      $this->load->model('usuarios');
-      $usuario = $this->usuarios->getUpdateInfoById($matricula);
-      $data['nombre'] = $usuario->Nombre;
-      $data['correo'] = $usuario->Correo;
-      $data['contrasena'] = $usuario->Contrasena;
+      $this->load->model('materias');
+      $materia = $this->materias->getUpdateInfoById($nrc);
+      $data['Nrc'] = $usuario->NRC;
+      $data['Nombre'] = $usuario->Nombre;
       $this->load->view('templates/header2',$session_data);
 			$this->load->view('templates/menu',$session_data);
-      $this->load->view('pages/usuario/update',$data);
+      $this->load->view('pages/materia/update',$data);
 			$this->load->view('templates/footer');
     }
     else {
@@ -107,15 +115,13 @@ class Materia extends CI_Controller{
     }
   }
 
-  public function update_post($matricula) {
+  public function update_post($nrc) {
     if($this->session->userdata('logged_in')) {
       if($this->input->post()) {
         $nombre = $this->input->post('nombre');
-        $correo = $this->input->post('correo');
-        $contrasena = $this->input->post('contrasena');
-        $this->load->model('usuarios');
-        $this->usuarios->update($nombre, $correo, $contrasena, $matricula);
-        redirect('usuario/getById/'.$matricula,'refresh');
+        $this->load->model('materias');
+        $this->materias->update($nrc, $nombre);
+        redirect('materia','refresh');
       }
       else {
         $this->update();
@@ -126,11 +132,11 @@ class Materia extends CI_Controller{
     }
   }
 
-  public function delete($id_usuario) {
+  public function delete($nrc) {
     if($this->session->userdata('logged_in')) {
-      $this->load->model('usuarios');
-      $this->usuarios->delete($id_usuario);
-      redirect('usuario','refresh');
+      $this->load->model('materias');
+      $this->materias->delete($nrc);
+      redirect('materia','refresh');
 		}
     else {
 			redirect('login', 'refresh');
