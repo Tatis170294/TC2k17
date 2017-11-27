@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="content-wrap">
                     <h6>Iniciar Sesión</h6>
                     <?php echo validation_errors(); ?>
-                    <?php echo form_open('../verifylogin'); ?>
+                    <?php echo form_open('../TC2k17/verifylogin'); ?>
                       <input class="form-control" type="text" placeholder="Matrícula" name="matricula" id="matricula">
                       <input class="form-control" type="password" placeholder="Password" name="password" id="password">
                       <div class="action">

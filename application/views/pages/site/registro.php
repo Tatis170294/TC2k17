@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="content-wrap">
                     <h6>Registro</h6>
                     <?php echo validation_errors(); ?>
-                      <?php echo form_open('../registro/insert'); ?>
+                      <?php echo form_open('../TC2k17/registro/insert'); ?>
                       <input class="form-control" type="text" placeholder="Matrícula" name="matricula" id="matricula">
                       <input class="form-control" type="text" placeholder="Nombre" name="nombre" id="nombre">
                       <input class="form-control" type="email" placeholder="Correo" name="correo" id="correo" />
